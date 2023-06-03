@@ -22,6 +22,8 @@ need to add:
 - balance text
 - Lawn cut count
 
+using bootstrap for styling and positioning
+
 
 future features:
 once user clicks on cut button they get redirected to a new page
@@ -31,8 +33,33 @@ current tool earnings.
 Balance is shown on both cut page and main page.
 */
 
+// function
+
 $(() => {
-  console.log($);
   const $h1 = $('<h1>').text('Landscaper').addClass('title');
   $('body').append($h1);
+
+  const $menu = $('<div>')
+    .addClass('menu container text-center')
+    .attr('id', 'menu-container');
+  const $btnContainer = $('<div>').addClass('row align-items-center');
+  const $cutBtn = $('<button>')
+    .attr('type', 'button')
+    .addClass('col btn btn-success')
+    .text('Cut');
+  const $upgradeBtn = $('<button>')
+    .attr('type', 'button')
+    .addClass('col btn btn-primary')
+    .text('Uprgrade');
+  const $resetBtn = $('<button>')
+    .attr('type', 'button')
+    .addClass('col btn btn-warning')
+    .text('Reset Game');
+
+  //appends
+  $('body').append($menu);
+  $menu.append($btnContainer);
+  $btnContainer.append($cutBtn);
+  $btnContainer.append($upgradeBtn);
+  $btnContainer.append($resetBtn);
 });
