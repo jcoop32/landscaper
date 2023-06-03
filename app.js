@@ -21,6 +21,18 @@ need to add:
 - container for tools unlocked and tools to shop
 - balance text ✅
 - Lawn cut count ✅
+- object for user
+  -key:value pairs:
+    -money
+    -lawncount
+    -currentTool
+    -hasTeeth
+    -hasScissors
+    -hasPushMower
+    -hasPowerMower
+    -hasStudents
+    -hasRobots
+
 
 using bootstrap for styling and positioning
 
@@ -33,9 +45,6 @@ current tool earnings.
 Balance is shown on both cut page and main page.
 */
 
-/***************
-GLOBAL VARIABLES 
-****************/
 //menu container
 const $menu = $('<div>')
   .addClass('menu container text-center my-3')
@@ -99,10 +108,33 @@ function displayMenu() {
   $('body').append($menu);
 }
 
+//game variables and logic
+//obj for user info
+const userStats = {
+  balance: 0,
+  lawncount: 0,
+  currentTool: cutGrass,
+  hasTeeth: true,
+  hasScissors: false,
+  hasPushMower: false,
+  hasPowerMower: false,
+  hasStudents: false,
+  hasRobots: false,
+};
+
+function cutGrass() {
+  userStats.balance += 1;
+  userStats.lawncount += 1;
+  $balanceAmount.text(`$${userStats.balance}`);
+  $lawnAmount.text(`${userStats.lawncount}`);
+}
+
 //jquery
 $(() => {
   const $h1 = $('<h1>').text('Landscaper').addClass('title');
   $('body').append($h1);
+
+  $cutBtn.on('click', cutGrass);
 
   displayMenu();
   displayStats();
