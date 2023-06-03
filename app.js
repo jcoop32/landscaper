@@ -17,10 +17,10 @@ Reset -> by clicking reset button user will reset their current game.
 Exit -> by clicking Exit button user can end and exit the game, this will show stats of the previous game.
 
 need to add:
-- menu container with 4 buttons
+- menu container with 4 buttons ✅
 - container for tools unlocked and tools to shop
-- balance text
-- Lawn cut count
+- balance text ✅
+- Lawn cut count ✅
 
 using bootstrap for styling and positioning
 
@@ -33,62 +33,54 @@ current tool earnings.
 Balance is shown on both cut page and main page.
 */
 
-// function to display buttons
+/***************
+GLOBAL VARIABLES 
+****************/
+//menu container
 const $menu = $('<div>')
-  .addClass('menu container text-center')
+  .addClass('menu container text-center my-3')
   .attr('id', 'menu-container');
 const $btnContainer = $('<div>').addClass('row align-items-center');
 const $cutBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'cutBtn')
-  .addClass('col btn btn-success')
+  .addClass('col btn btn-success m-1')
   .text('Cut');
 const $upgradeBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'upgradeBtn')
-  .addClass('col btn btn-primary')
+  .addClass('col btn btn-primary m-1')
   .text('Uprgrade');
 const $resetBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'resetBtn')
-  .addClass('col btn btn-warning')
+  .addClass('col btn btn-warning m-1')
   .text('Reset Game');
 const $endBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'endBtn')
-  .addClass('col btn btn-danger')
+  .addClass('col btn btn-danger m-1')
   .text('End Game');
 
+//stats container
 const $statsContainer = $('<div>')
-  .addClass('container text-center')
-  .attr('id', 'stats-container')
-  .css('border', '1px solid black')
-  .css('border-radius', '0px');
-
+  .addClass('container text-center pt-3')
+  .attr('id', 'stats-container');
 const $divRowContainer = $('<div>')
   .addClass('row row-cols-2')
-  .attr('id', 'row-container');
-const $balanceText = $('<div>')
-  .addClass('col')
-  .text('Current Balance: ')
+  .attr('id', 'row-container')
   .css('border', '1px solid black')
-  .css('border-radius', '0px');
-const $balanceAmount = $('<div>')
-  .addClass('col')
-  .text('$0')
-  .css('border', '1px solid black')
-  .css('border-radius', '0px');
-const $lawnAmountText = $('<div>')
-  .addClass('col')
-  .text('Lawn Count:')
-  .css('border', '1px solid black')
-  .css('border-radius', '0px');
-const $lawnAmount = $('<div>')
-  .addClass('col')
-  .text('0')
-  .css('border', '1px solid black')
-  .css('border-radius', '0px');
+  .css('border-radius', '10px');
+//items in row container
+const $balanceText = $('<div>').addClass('col').text('Current Balance: ');
 
+const $balanceAmount = $('<div>').addClass('col').text('$0');
+
+const $lawnAmountText = $('<div>').addClass('col').text('Lawn Count:');
+
+const $lawnAmount = $('<div>').addClass('col').text('0');
+
+// function to display stats container
 function displayStats() {
   $('body').append($statsContainer);
   $statsContainer.append($divRowContainer);
@@ -99,16 +91,15 @@ function displayStats() {
     $lawnAmount
   );
 }
+// function to display buttons
 function displayMenu() {
   $menu.append($btnContainer);
-  $btnContainer.append($cutBtn);
-  $btnContainer.append($upgradeBtn);
-  $btnContainer.append($resetBtn);
-  $btnContainer.append($endBtn);
+  $btnContainer.append($cutBtn, $upgradeBtn, $resetBtn, $endBtn);
   //appends
   $('body').append($menu);
 }
 
+//jquery
 $(() => {
   const $h1 = $('<h1>').text('Landscaper').addClass('title');
   $('body').append($h1);
