@@ -80,6 +80,17 @@ const $endBtn = $('<button>')
   .addClass('col btn btn-danger m-1')
   .text('End Game');
 
+// function to display buttons
+function displayMenu() {
+  $menu.append($btnContainer);
+  $btnContainer.append($cutBtn, $upgradeBtn, $resetBtn, $endBtn);
+  // $upgradeContainer.append($upgradeBtn);
+  // $upgradeBtn.append($downdownMenuUl);
+  // $downdownMenuUl.append($dropDownItem);
+  //appends
+  $('body').append($menu);
+}
+
 //stats container
 const $statsContainer = $('<div>')
   .addClass('container text-center pt-3')
@@ -109,16 +120,155 @@ function displayStats() {
     $lawnAmount
   );
 }
-// function to display buttons
-function displayMenu() {
-  $menu.append($btnContainer);
-  $btnContainer.append($cutBtn, $upgradeBtn, $resetBtn, $endBtn);
-  // $upgradeContainer.append($upgradeBtn);
-  // $upgradeBtn.append($downdownMenuUl);
-  // $downdownMenuUl.append($dropDownItem);
-  //appends
-  $('body').append($menu);
+
+//tool container
+// const $toolsContainer = $('<div>')
+//   .addClass('container text-center my-3')
+//   .attr('id', 'tool-container');
+// const $toolContainerRow = $('<div>').addClass('row align-items-center');
+// const $teethBtn = $('<button>')
+//   .attr('type', 'button')
+//   .attr('id', 'teeth-btn')
+//   .addClass('col btn btn-secondary m-1')
+//   .text('Teeth');
+
+// const $scissorsBtn = $('<button>')
+//   .attr('type', 'button')
+//   .attr('id', 'scissors-btn')
+//   .addClass('col btn btn-secondary m-1')
+//   .text('Scissors');
+
+// const $pushMowerBtn = $('<button>')
+//   .attr('type', 'button')
+//   .attr('id', 'push-btn')
+//   .addClass('col btn btn-secondary m-1')
+//   .text('Push Mower');
+// const $powerMowerBtn = $('<button>')
+//   .attr('type', 'button')
+//   .attr('id', 'power-btn')
+//   .addClass('col btn btn-secondary m-1')
+//   .text('Power Mower');
+// const $studentsBtn = $('<button>')
+//   .attr('type', 'button')
+//   .attr('id', 'student-btn')
+//   .addClass('col btn btn-secondary m-1')
+//   .text('Students');
+// const $robotsBtn = $('<button>')
+//   .attr('type', 'button')
+//   .attr('id', 'robot-btn')
+//   .addClass('col btn btn-secondary m-1')
+//   .text('Robot');
+
+const $toolsContainer = $('<div>')
+  .addClass('container btn-group mt-3')
+  .attr('role', 'group')
+  .attr('aria-label', 'Basic radio toggle button group');
+// .attr('id', 'tool-container');
+
+//teeth
+const $teethInput = $('<input>')
+  .addClass('btn-check')
+  .attr('type', 'radio')
+  .attr('name', 'btnradio')
+  .attr('checked', '')
+  .attr('autocomplete', 'off')
+  .attr('id', 'teeth-input');
+const $teethLabel = $('<label>')
+  .addClass('btn btn-outline-primary')
+  .attr('for', 'teeth-input')
+  .text('Teeth');
+
+//scissors
+const $scissorsInput = $('<input>')
+  .addClass('btn-check')
+  .attr('type', 'radio')
+  .attr('name', 'btnradio')
+  .attr('autocomplete', 'off')
+  .attr('id', 'scissors-input');
+const $scissorsLabel = $('<label>')
+  .addClass('btn btn-outline-primary')
+  .attr('for', 'scissors-input')
+  .text('Scissors');
+
+//push mower
+const $pushMowerInput = $('<input>')
+  .addClass('btn-check')
+  .attr('type', 'radio')
+  .attr('name', 'btnradio')
+  .attr('autocomplete', 'off')
+  .attr('id', 'push-input');
+const $pushMowerLabel = $('<label>')
+  .addClass('btn btn-outline-primary')
+  .attr('for', 'push-input')
+  .text('Power Mower');
+
+//power mower
+const $powerInput = $('<input>')
+  .addClass('btn-check')
+  .attr('type', 'radio')
+  .attr('name', 'btnradio')
+  .attr('autocomplete', 'off')
+  .attr('id', 'power-input');
+const $powerLabel = $('<label>')
+  .addClass('btn btn-outline-primary')
+  .attr('for', 'power-input')
+  .text('Push Mower');
+
+//student
+const $studentInput = $('<input>')
+  .addClass('btn-check')
+  .attr('type', 'radio')
+  .attr('name', 'btnradio')
+  .attr('autocomplete', 'off')
+  .attr('id', 'student-input');
+const $studentLabel = $('<label>')
+  .addClass('btn btn-outline-primary')
+  .attr('for', 'student-input')
+  .text('Hire Students');
+
+//robot
+const $robotInput = $('<input>')
+  .addClass('btn-check')
+  .attr('type', 'radio')
+  .attr('name', 'btnradio')
+  .attr('autocomplete', 'off')
+  .attr('id', 'robot-input');
+const $robotLabel = $('<label>')
+  .addClass('btn btn-outline-primary')
+  .attr('for', 'robot-input')
+  .text('Robot');
+
+function displayTools() {
+  $('body').append($toolsContainer);
+  $toolsContainer.append(
+    $teethInput,
+    $teethLabel,
+    $scissorsInput,
+    $scissorsLabel,
+    $pushMowerInput,
+    $pushMowerLabel,
+    $powerInput,
+    $powerLabel,
+    $studentInput,
+    $studentLabel,
+    $robotInput,
+    $robotLabel
+  );
 }
+
+// function to tool buttons
+// function displayTools() {
+//   $('body').append($toolsContainer);
+//   $toolsContainer.append($toolContainerRow);
+//   $toolContainerRow.append(
+//     $teethBtn,
+//     $scissorsBtn,
+//     $pushMowerBtn,
+//     $powerMowerBtn,
+//     $studentsBtn,
+//     $robotsBtn
+//   );
+// }
 
 //game variables and logic
 //obj for user info
@@ -126,32 +276,38 @@ const userStats = {
   balance: 0,
   lawncount: 0,
   currentTool: cutGrassTeeth,
-  hasTeeth: {
+  teeth: {
+    toolName: 'Teeth',
     own: true,
     profit: 1,
     cost: 0,
   },
-  hasScissors: {
+  scissors: {
+    toolName: 'Scissors',
     own: false,
     profit: 5,
     cost: 10,
   },
-  hasPushMower: {
+  pushMower: {
+    toolName: 'Push Mower',
     own: false,
     profit: 25,
     cost: 50,
   },
-  hasPowerMower: {
+  powerMower: {
+    toolName: 'Power Mower',
     own: false,
     profit: 50,
     cost: 250,
   },
-  hasStudents: {
+  students: {
+    toolName: 'Students',
     own: false,
     profit: 100,
     cost: 500,
   },
-  hasRobots: {
+  robots: {
+    toolName: 'Robots',
     own: false,
     profit: 250,
     cost: 5000,
@@ -167,31 +323,33 @@ function cutGrass() {
 }
 
 function cutGrassTeeth() {
-  userStats.balance += 1;
+  userStats.balance += userStats.teeth.profit;
 }
 function cutGrassScissors() {
-  userStats.balance += 5;
+  userStats.balance += userStats.scissors.profit;
 }
 function cutGrassPushMower() {
-  userStats.balance += 25;
+  userStats.balance += userStats.pushMower.profit;
 }
 function cutGrassPowerMower() {
-  userStats.balance += 50;
+  userStats.balance += userStats.powerMower.profit;
 }
 function cutGrassStudents() {
-  userStats.balance += 100;
+  userStats.balance += userStats.students.profit;
 }
 function cutGrassRobots() {
-  userStats.balance += 250;
+  userStats.balance += userStats.robots.profit;
 }
 
 //jquery
 $(() => {
   const $h1 = $('<h1>').text('Landscaper').addClass('title');
   $('body').append($h1);
+  $('body').addClass('container');
 
   $cutBtn.on('click', cutGrass);
 
   displayMenu();
   displayStats();
+  displayTools();
 });
