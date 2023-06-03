@@ -9,13 +9,26 @@ At any point, if you are currently using rusty scissors, you can buy an old-time
 I then did the same for each tool upgrade, with the same process.
 
 Game Flow:
+Menu will display 4 button options including:
 Cut Grass -> by clicking cut button on screen user will execute the cutGrass() function.
 Upgrade Tool -> by clicking the upgrade tool button user can check and see if they are eligible to upgrade their tool.
 Check Balance -> Current balance will be displayed on the screen and change based on users interactions.
 Reset -> by clicking reset button user will reset their current game.
 Exit -> by clicking Exit button user can end and exit the game, this will show stats of the previous game.
 
+need to add:
+- menu container with 4 buttons
+- container for tools unlocked and tools to shop
+- balance text
+- Lawn cut count
 
+
+future features:
+once user clicks on cut button they get redirected to a new page
+with a bunch of green squares (grass), once a grass block is clicked it removes it and increases balance amount by 
+current tool earnings.
+
+Balance is shown on both cut page and main page.
 */
 
 $(() => {
