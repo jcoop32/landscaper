@@ -126,16 +126,41 @@ const userStats = {
   balance: 0,
   lawncount: 0,
   currentTool: cutGrassTeeth,
-  hasTeeth: true,
-  hasScissors: false,
-  hasPushMower: false,
-  hasPowerMower: false,
-  hasStudents: false,
-  hasRobots: false,
+  hasTeeth: {
+    own: true,
+    profit: 1,
+    cost: 0,
+  },
+  hasScissors: {
+    own: false,
+    profit: 5,
+    cost: 10,
+  },
+  hasPushMower: {
+    own: false,
+    profit: 25,
+    cost: 50,
+  },
+  hasPowerMower: {
+    own: false,
+    profit: 50,
+    cost: 250,
+  },
+  hasStudents: {
+    own: false,
+    profit: 100,
+    cost: 500,
+  },
+  hasRobots: {
+    own: false,
+    profit: 250,
+    cost: 5000,
+  },
 };
 
 function cutGrass() {
   userStats.currentTool();
+  // userStats.balance += userStats.hasPowerMower.profit;
   userStats.lawncount += 1;
   $balanceAmount.text(`$${userStats.balance}`);
   $lawnAmount.text(`${userStats.lawncount}`);
