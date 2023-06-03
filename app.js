@@ -55,11 +55,20 @@ const $cutBtn = $('<button>')
   .attr('id', 'cutBtn')
   .addClass('col btn btn-success m-1')
   .text('Cut');
+
+// const $upgradeContainer = $('<div>')
+//   .addClass('btn-group')
+//   .attr('role', 'group');
+
 const $upgradeBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'upgradeBtn')
   .addClass('col btn btn-primary m-1')
-  .text('Uprgrade');
+  .text('Upgrade');
+
+// const $downdownMenuUl = $('<ul>').addClass('dropdown-menu');
+// const $dropDownItem = $('<li>').addClass('dropdown-item').text('Scissors');
+
 const $resetBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'resetBtn')
@@ -104,6 +113,9 @@ function displayStats() {
 function displayMenu() {
   $menu.append($btnContainer);
   $btnContainer.append($cutBtn, $upgradeBtn, $resetBtn, $endBtn);
+  // $upgradeContainer.append($upgradeBtn);
+  // $upgradeBtn.append($downdownMenuUl);
+  // $downdownMenuUl.append($dropDownItem);
   //appends
   $('body').append($menu);
 }
@@ -113,7 +125,7 @@ function displayMenu() {
 const userStats = {
   balance: 0,
   lawncount: 0,
-  currentTool: cutGrass,
+  currentTool: cutGrassTeeth,
   hasTeeth: true,
   hasScissors: false,
   hasPushMower: false,
@@ -123,10 +135,29 @@ const userStats = {
 };
 
 function cutGrass() {
-  userStats.balance += 1;
+  userStats.currentTool();
   userStats.lawncount += 1;
   $balanceAmount.text(`$${userStats.balance}`);
   $lawnAmount.text(`${userStats.lawncount}`);
+}
+
+function cutGrassTeeth() {
+  userStats.balance += 1;
+}
+function cutGrassScissors() {
+  userStats.balance += 5;
+}
+function cutGrassPushMower() {
+  userStats.balance += 25;
+}
+function cutGrassPowerMower() {
+  userStats.balance += 50;
+}
+function cutGrassStudents() {
+  userStats.balance += 100;
+}
+function cutGrassRobots() {
+  userStats.balance += 250;
 }
 
 //jquery
