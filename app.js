@@ -33,33 +33,86 @@ current tool earnings.
 Balance is shown on both cut page and main page.
 */
 
-// function
+// function to display buttons
+const $menu = $('<div>')
+  .addClass('menu container text-center')
+  .attr('id', 'menu-container');
+const $btnContainer = $('<div>').addClass('row align-items-center');
+const $cutBtn = $('<button>')
+  .attr('type', 'button')
+  .attr('id', 'cutBtn')
+  .addClass('col btn btn-success')
+  .text('Cut');
+const $upgradeBtn = $('<button>')
+  .attr('type', 'button')
+  .attr('id', 'upgradeBtn')
+  .addClass('col btn btn-primary')
+  .text('Uprgrade');
+const $resetBtn = $('<button>')
+  .attr('type', 'button')
+  .attr('id', 'resetBtn')
+  .addClass('col btn btn-warning')
+  .text('Reset Game');
+const $endBtn = $('<button>')
+  .attr('type', 'button')
+  .attr('id', 'endBtn')
+  .addClass('col btn btn-danger')
+  .text('End Game');
+
+const $statsContainer = $('<div>')
+  .addClass('container text-center')
+  .attr('id', 'stats-container')
+  .css('border', '1px solid black')
+  .css('border-radius', '0px');
+
+const $divRowContainer = $('<div>')
+  .addClass('row row-cols-2')
+  .attr('id', 'row-container');
+const $balanceText = $('<div>')
+  .addClass('col')
+  .text('Current Balance: ')
+  .css('border', '1px solid black')
+  .css('border-radius', '0px');
+const $balanceAmount = $('<div>')
+  .addClass('col')
+  .text('$0')
+  .css('border', '1px solid black')
+  .css('border-radius', '0px');
+const $lawnAmountText = $('<div>')
+  .addClass('col')
+  .text('Lawn Count:')
+  .css('border', '1px solid black')
+  .css('border-radius', '0px');
+const $lawnAmount = $('<div>')
+  .addClass('col')
+  .text('0')
+  .css('border', '1px solid black')
+  .css('border-radius', '0px');
+
+function displayStats() {
+  $('body').append($statsContainer);
+  $statsContainer.append($divRowContainer);
+  $divRowContainer.append(
+    $balanceText,
+    $lawnAmountText,
+    $balanceAmount,
+    $lawnAmount
+  );
+}
+function displayMenu() {
+  $menu.append($btnContainer);
+  $btnContainer.append($cutBtn);
+  $btnContainer.append($upgradeBtn);
+  $btnContainer.append($resetBtn);
+  $btnContainer.append($endBtn);
+  //appends
+  $('body').append($menu);
+}
 
 $(() => {
   const $h1 = $('<h1>').text('Landscaper').addClass('title');
   $('body').append($h1);
 
-  const $menu = $('<div>')
-    .addClass('menu container text-center')
-    .attr('id', 'menu-container');
-  const $btnContainer = $('<div>').addClass('row align-items-center');
-  const $cutBtn = $('<button>')
-    .attr('type', 'button')
-    .addClass('col btn btn-success')
-    .text('Cut');
-  const $upgradeBtn = $('<button>')
-    .attr('type', 'button')
-    .addClass('col btn btn-primary')
-    .text('Uprgrade');
-  const $resetBtn = $('<button>')
-    .attr('type', 'button')
-    .addClass('col btn btn-warning')
-    .text('Reset Game');
-
-  //appends
-  $('body').append($menu);
-  $menu.append($btnContainer);
-  $btnContainer.append($cutBtn);
-  $btnContainer.append($upgradeBtn);
-  $btnContainer.append($resetBtn);
+  displayMenu();
+  displayStats();
 });
