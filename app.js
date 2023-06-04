@@ -519,12 +519,6 @@ function toolShop() {
   $storeContainer.show();
 }
 
-// function toolBuyProccess() {
-// if (userStats.balance > userStats.scissors.cost){
-//
-// }
-// }
-
 function buyScissors() {
   if (userStats.balance > userStats.scissors.cost) {
     userStats.balance = userStats.balance - userStats.scissors.cost;
@@ -602,3 +596,8 @@ $(() => {
   displayTools();
   displayMessage();
 });
+
+/*TODO: fix subtraction from when user buys a new tool, 
+finish funcitonaliy of end game btn, create text when user buys new item, if user cant buy item display error message in red,
+display end game stats when user finishes game.
+*/
