@@ -21,7 +21,7 @@ need to add:
 - container for tools unlocked and tools to shop
 - balance text ✅
 - Lawn cut count ✅
-- object for user
+- object for user ✅
   -key:value pairs:
     -money
     -lawncount
@@ -120,9 +120,11 @@ function displayStats() {
     $lawnAmount
   );
 }
-
+const $toolboxTitle = $('<h2>')
+  .text('Tools')
+  .addClass('toolTitle mt-3 container');
 const $toolsContainer = $('<div>')
-  .addClass('container btn-group mt-3')
+  .addClass('container btn-group')
   .attr('role', 'group')
   .attr('aria-label', 'Basic radio toggle button group')
   .attr('id', 'tool-container');
@@ -202,7 +204,7 @@ const $robotLabel = $('<label>')
 
 //display tool radio container
 function displayTools() {
-  $('body').append($toolsContainer);
+  $('body').append($toolboxTitle, $toolsContainer);
   $toolsContainer.append(
     $teethInput,
     $teethLabel,
@@ -217,6 +219,18 @@ function displayTools() {
     $robotInput,
     $robotLabel
   );
+}
+
+const $messageContainer = $('<div>').addClass('container');
+const $gameMessage = $('<p>').addClass('message');
+function displayMessage() {
+  $('body').append($messageContainer);
+  $messageContainer.append($gameMessage);
+}
+
+//ran num for game message
+function ranNum(MAX_NUM, MIN_NUM) {
+  return Math.floor(Math.random() * (MAX_NUM - MIN_NUM) + MIN_NUM);
 }
 
 //game variables and logic
@@ -269,7 +283,7 @@ function cutGrass() {
   $balanceAmount.text(`$${userStats.balance}`);
   $lawnAmount.text(`${userStats.lawncount}`);
   const $selectedBtn = $('input[type=radio]:checked').attr('id');
-  console.log($selectedBtn);
+  // console.log(userStats);
   //   console.log(`current tool: ${userStats.currentTool}`);
 }
 
@@ -278,18 +292,23 @@ function toolSelected() {
   const $selectedBtn = $('input[type=radio]:checked').attr('id');
   switch ($selectedBtn) {
     case 'scissors-input':
+      userStats.scissors.own = true;
       cutGrassScissors();
       break;
     case 'pushMower-input':
+      userStats.pushMower.own = true;
       cutGrassPushMower();
       break;
     case 'power-input':
+      userStats.powerMower.own = true;
       cutGrassPowerMower();
       break;
     case 'student-input':
+      userStats.students.own = true;
       cutGrassStudents();
       break;
     case 'robot-input':
+      userStats.robots.own = true;
       cutGrassRobots();
       break;
     default:
@@ -298,27 +317,72 @@ function toolSelected() {
   }
 }
 
+//fucntions for different tools
 function cutGrassTeeth() {
   userStats.balance += userStats.teeth.profit;
+  $gameMessage.text(
+    `You spent ${ranNum(
+      70,
+      35
+    )} hours cutting a customers lawn with yout teeth and made $${
+      userStats.teeth.profit
+    }!`
+  );
 }
 function cutGrassScissors() {
   userStats.balance += userStats.scissors.profit;
+  $gameMessage.text(
+    `You spent ${ranNum(
+      35,
+      17
+    )} hours cutting a customers lawn with a pair of scissors and made $${
+      userStats.scissors.profit
+    }!`
+  );
 }
 function cutGrassPushMower() {
-  userStats.currentTool = cutGrass;
   userStats.balance += userStats.pushMower.profit;
+  $gameMessage.text(
+    `You spent ${ranNum(
+      10,
+      6
+    )} hours cutting a customers lawn with your push mower and made $${
+      userStats.pushMower.profit
+    }!`
+  );
 }
 function cutGrassPowerMower() {
-  userStats.currentTool = cutGrass;
   userStats.balance += userStats.powerMower.profit;
+  $gameMessage.text(
+    `You spent ${ranNum(
+      6,
+      4
+    )} hours cutting a customers lawn with your power mower and made $${
+      userStats.powerMower.profit
+    }!`
+  );
 }
 function cutGrassStudents() {
-  userStats.currentTool = cutGrass;
   userStats.balance += userStats.students.profit;
+  $gameMessage.text(
+    `You spent ${ranNum(
+      3,
+      1
+    )} hour(s) watching the students you hired cut a customers lawn made $${
+      userStats.students.profit
+    }!`
+  );
 }
 function cutGrassRobots() {
-  userStats.currentTool = cutGrass;
   userStats.balance += userStats.robots.profit;
+  $gameMessage.text(
+    `Your Robots spent ${ranNum(
+      55,
+      35
+    )} minutes cutting a customers lawn and made you $${
+      userStats.robots.profit
+    }!`
+  );
 }
 
 //jquery
@@ -346,4 +410,5 @@ $(() => {
   displayMenu();
   displayStats();
   displayTools();
+  displayMessage();
 });
