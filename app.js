@@ -91,6 +91,112 @@ function displayMenu() {
   $('body').append($menu);
 }
 
+//upgrade store
+const $storeContainer = $('<div>')
+  .addClass('container m-1 ')
+  .attr('id', 'store-container');
+//scissors
+const $scissorCard = $('<div>').addClass('card').attr('style', 'width: 18rem;');
+const $scissorIcon = $('<img>')
+  .attr('src', '/tool-icons/first-aid-scissors.jpg')
+  .addClass('card-img-top');
+const $scissorCardBody = $('<div>').addClass('card-body');
+const $scissorToolTitle = $('<h5>').addClass('card-title').text('Scissors');
+const $scissorDescription = $('<p>')
+  .addClass('card-text')
+  .text('Scissors cost $10');
+const $scissorBuyBtn = $('<button>')
+  .addClass('btn btn-primary')
+  .text('Buy for $10');
+
+//push mower
+const $pushCard = $('<div>').addClass('card').attr('style', 'width: 18rem;');
+const $pushIcon = $('<img>')
+  .attr('src', '/tool-icons/scotts-reel-lawn-mowers-415-16s-64_1000.webp')
+  .addClass('card-img-top');
+const $pushCardBody = $('<div>').addClass('card-body');
+const $pushToolTitle = $('<h5>').addClass('card-title').text('Push Mower');
+const $pushDescription = $('<p>')
+  .addClass('card-text')
+  .text('Push Mower cost $50');
+const $pushMowerBuyBtn = $('<button>')
+  .addClass('btn btn-primary')
+  .text('Buy for $50');
+
+//power mower
+const $powerCard = $('<div>').addClass('card').attr('style', 'width: 18rem;');
+const $powerIcon = $('<img>')
+  .attr('src', '/tool-icons/murray-lawn-tractors-myt4219000-64_600.avif')
+  .addClass('card-img-top');
+const $powerCardBody = $('<div>').addClass('card-body');
+const $powerToolTitle = $('<h5>').addClass('card-title').text('Power Mower');
+const $powerDescription = $('<p>')
+  .addClass('card-text')
+  .text('Power Mower cost $250');
+const $powerBuyBtn = $('<button>')
+  .addClass('btn btn-primary')
+  .text('Buy for $250');
+
+//students
+const $studentCard = $('<div>').addClass('card').attr('style', 'width: 18rem;');
+const $studentIcon = $('<img>')
+  .attr('src', '/tool-icons/vector-group-people-icon.jpg')
+  .addClass('card-img-top');
+const $studentCardBody = $('<div>').addClass('card-body');
+const $studentToolTitle = $('<h5>').addClass('card-title').text('Students');
+const $studentDescription = $('<p>')
+  .addClass('card-text')
+  .text('Hire Students for $500');
+const $studentBuyBtn = $('<button>')
+  .addClass('btn btn-primary')
+  .text('Hire for $500');
+
+//robots
+const $robotCard = $('<div>').addClass('card').attr('style', 'width: 18rem;');
+const $robotIcon = $('<img>')
+  .attr('src', '/tool-icons/robot-with-two-arms-up_icon-icons.com_55254.png')
+  .addClass('card-img-top');
+const $robotCardBody = $('<div>').addClass('card-body');
+const $robotToolTitle = $('<h5>').addClass('card-title').text('Robot');
+const $robotDescription = $('<p>')
+  .addClass('card-text')
+  .text('Robot cost $5000');
+const $robotBuyBtn = $('<button>')
+  .addClass('btn btn-primary')
+  .text('Buy for $5000');
+
+function displayStore() {
+  $('body').append($storeContainer);
+  $storeContainer.append(
+    $scissorCard,
+    $pushCard,
+    $powerCard,
+    $studentCard,
+    $robotCard
+  );
+  $scissorCard.append($scissorIcon, $scissorCardBody);
+  $scissorCardBody.append(
+    $scissorToolTitle,
+    $scissorDescription,
+    $scissorBuyBtn
+  );
+  $pushCard.append($pushIcon, $pushCardBody);
+  $pushCardBody.append($pushToolTitle, $pushDescription, $pushMowerBuyBtn);
+
+  $powerCard.append($powerIcon, $powerCardBody);
+  $powerCardBody.append($powerToolTitle, $powerDescription, $powerBuyBtn);
+
+  $studentCard.append($studentIcon, $studentCardBody);
+  $studentCardBody.append(
+    $studentToolTitle,
+    $studentDescription,
+    $studentBuyBtn
+  );
+
+  $robotCard.append($robotIcon, $robotCardBody);
+  $robotCardBody.append($robotToolTitle, $robotDescription, $robotBuyBtn);
+}
+
 //stats container
 const $statsContainer = $('<div>')
   .addClass('container text-center pt-3')
@@ -219,6 +325,16 @@ function displayTools() {
     $robotInput,
     $robotLabel
   );
+  $scissorsInput.hide();
+  $scissorsLabel.hide();
+  $pushMowerInput.hide();
+  $pushMowerLabel.hide();
+  $powerInput.hide();
+  $powerLabel.hide();
+  $studentInput.hide();
+  $studentLabel.hide();
+  $robotInput.hide();
+  $robotLabel.hide();
 }
 
 const $messageContainer = $('<div>').addClass('container');
@@ -285,6 +401,10 @@ function cutGrass() {
   const $selectedBtn = $('input[type=radio]:checked').attr('id');
   // console.log(userStats);
   //   console.log(`current tool: ${userStats.currentTool}`);
+  if (userStats.balance > 5) {
+    $scissorsInput.show();
+    $scissorsLabel.show();
+  }
 }
 
 //function to check which radio button is selected
@@ -292,23 +412,18 @@ function toolSelected() {
   const $selectedBtn = $('input[type=radio]:checked').attr('id');
   switch ($selectedBtn) {
     case 'scissors-input':
-      userStats.scissors.own = true;
       cutGrassScissors();
       break;
     case 'pushMower-input':
-      userStats.pushMower.own = true;
       cutGrassPushMower();
       break;
     case 'power-input':
-      userStats.powerMower.own = true;
       cutGrassPowerMower();
       break;
     case 'student-input':
-      userStats.students.own = true;
       cutGrassStudents();
       break;
     case 'robot-input':
-      userStats.robots.own = true;
       cutGrassRobots();
       break;
     default:
@@ -330,6 +445,7 @@ function cutGrassTeeth() {
   );
 }
 function cutGrassScissors() {
+  userStats.scissors.own = true;
   userStats.balance += userStats.scissors.profit;
   $gameMessage.text(
     `You spent ${ranNum(
@@ -341,6 +457,7 @@ function cutGrassScissors() {
   );
 }
 function cutGrassPushMower() {
+  userStats.pushMower.own = true;
   userStats.balance += userStats.pushMower.profit;
   $gameMessage.text(
     `You spent ${ranNum(
@@ -352,6 +469,7 @@ function cutGrassPushMower() {
   );
 }
 function cutGrassPowerMower() {
+  userStats.powerMower.own = true;
   userStats.balance += userStats.powerMower.profit;
   $gameMessage.text(
     `You spent ${ranNum(
@@ -363,6 +481,7 @@ function cutGrassPowerMower() {
   );
 }
 function cutGrassStudents() {
+  userStats.students.own = true;
   userStats.balance += userStats.students.profit;
   $gameMessage.text(
     `You spent ${ranNum(
@@ -374,6 +493,7 @@ function cutGrassStudents() {
   );
 }
 function cutGrassRobots() {
+  userStats.robots.own = true;
   userStats.balance += userStats.robots.profit;
   $gameMessage.text(
     `Your Robots spent ${ranNum(
@@ -408,6 +528,7 @@ $(() => {
   // });
 
   displayMenu();
+  displayStore();
   displayStats();
   displayTools();
   displayMessage();
