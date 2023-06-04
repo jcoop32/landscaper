@@ -53,7 +53,7 @@ const $btnContainer = $('<div>').addClass('row align-items-center');
 const $cutBtn = $('<button>')
   .attr('type', 'button')
   .attr('id', 'cutBtn')
-  .addClass('col btn btn-success m-1')
+  .addClass('col-5 btn btn-success m-1')
   .text('Cut');
 
 // const $upgradeContainer = $('<div>')
@@ -84,10 +84,6 @@ const $endBtn = $('<button>')
 function displayMenu() {
   $menu.append($btnContainer);
   $btnContainer.append($cutBtn, $upgradeBtn, $resetBtn, $endBtn);
-  // $upgradeContainer.append($upgradeBtn);
-  // $upgradeBtn.append($downdownMenuUl);
-  // $downdownMenuUl.append($dropDownItem);
-  //appends
   $('body').append($menu);
 }
 
@@ -195,6 +191,14 @@ function displayStore() {
 
   $robotCard.append($robotIcon, $robotCardBody);
   $robotCardBody.append($robotToolTitle, $robotDescription, $robotBuyBtn);
+}
+
+//shop text response
+const $shopTextContainer = $('<div>').addClass('container');
+const $shopResponse = $('<h5>').addClass('container text-center').text('');
+function displayShopResponse() {
+  $('body').append($shopTextContainer);
+  $shopTextContainer.append($shopResponse);
 }
 
 //stats container
@@ -341,6 +345,14 @@ function hideUnlockedTools() {
   $robotLabel.hide();
 }
 
+function showToolShop() {
+  $scissorCard.show();
+  $pushCard.show();
+  $powerCard.show();
+  $studentCard.show();
+  $robotCard.show();
+}
+
 const $messageContainer = $('<div>').addClass('container');
 const $gameMessage = $('<p>').addClass('message');
 function displayMessage() {
@@ -401,12 +413,13 @@ const userStats = {
 //main cut grass function
 
 function cutGrass() {
+  $shopResponse.hide();
   $storeContainer.hide();
   userStats.lawncount += 1;
   toolSelected();
   $balanceAmount.text(`$${userStats.balance}`);
   $lawnAmount.text(`${userStats.lawncount}`);
-  const $selectedBtn = $('input[type=radio]:checked').attr('id');
+  //const $selectedBtn = $('input[type=radio]:checked').attr('id');
   // console.log(userStats);
   //   console.log(`current tool: ${userStats.currentTool}`);
 }
@@ -516,6 +529,7 @@ function cutGrassRobots() {
 }
 
 function toolShop() {
+  $shopResponse.show();
   $storeContainer.show();
 }
 
@@ -525,6 +539,12 @@ function buyScissors() {
     $scissorsInput.show();
     $scissorsLabel.show();
     $scissorCard.hide();
+  } else {
+    $shopResponse
+      .text(
+        `You do not have enough money to buy ${userStats.scissors.toolName}.`
+      )
+      .css('color', 'red');
   }
 }
 function buypushMower() {
@@ -533,14 +553,26 @@ function buypushMower() {
     $pushMowerInput.show();
     $pushMowerLabel.show();
     $pushCard.hide();
+  } else {
+    $shopResponse
+      .text(
+        `You do not have enough money to buy ${userStats.pushMower.toolName}.`
+      )
+      .css('color', 'red');
   }
 }
 function buyPowerMower() {
   if (userStats.balance > userStats.powerMower.cost) {
-    userStats.balance = userStats.balance - userStats.powerMower.cost;
+    userStats.balance = userStats.balance - userStats.pushMower.cost;
     $powerInput.show();
     $powerLabel.show();
     $powerCard.hide();
+  } else {
+    $shopResponse
+      .text(
+        `You do not have enough money to buy ${userStats.powerMower.toolName}.`
+      )
+      .css('color', 'red');
   }
 }
 function buyStudents() {
@@ -549,6 +581,12 @@ function buyStudents() {
     $studentInput.show();
     $studentLabel.show();
     $studentCard.hide();
+  } else {
+    $shopResponse
+      .text(
+        `You do not have enough money to hire ${userStats.students.toolName}.`
+      )
+      .css('color', 'red');
   }
 }
 function buyRobot() {
@@ -557,17 +595,24 @@ function buyRobot() {
     $robotInput.show();
     $robotLabel.show();
     $robotCard.hide();
+  } else {
+    $shopResponse
+      .text(`You do not have enough money to buy ${userStats.robots.toolName}.`)
+      .css('color', 'red');
   }
 }
 
 function resetGame() {
+  $shopResponse.hide();
   $storeContainer.hide();
+  showToolShop();
   hideUnlockedTools();
   userStats.balance = 0;
   userStats.lawncount = 0;
   userStats.currentTool = cutGrass;
   $balanceAmount.text(`$${userStats.balance}`);
   $lawnAmount.text(`${userStats.lawncount}`);
+  $teethInput.attr('checked', 'checked');
   $gameMessage.text('Game reset.');
 }
 
@@ -592,6 +637,7 @@ $(() => {
 
   displayMenu();
   displayStore();
+  displayShopResponse();
   displayStats();
   displayTools();
   displayMessage();
