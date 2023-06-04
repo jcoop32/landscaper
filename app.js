@@ -100,7 +100,9 @@ const $scissorCardBody = $('<div>').addClass('card-body');
 const $scissorToolTitle = $('<h5>').addClass('card-title').text('Scissors');
 const $scissorDescription = $('<p>')
   .addClass('card-text')
-  .text('Scissors cost $10');
+  .text(
+    'Scissors cost $10.  This will now increase your profits to $5 per lawn.'
+  );
 const $scissorBuyBtn = $('<button>')
   .addClass('btn btn-primary')
   .text('Buy for $10');
@@ -114,7 +116,9 @@ const $pushCardBody = $('<div>').addClass('card-body');
 const $pushToolTitle = $('<h5>').addClass('card-title').text('Push Mower');
 const $pushDescription = $('<p>')
   .addClass('card-text')
-  .text('Push Mower cost $50');
+  .text(
+    'Push Mower cost $50.  This will now increase your profits to $25 per lawn.'
+  );
 const $pushMowerBuyBtn = $('<button>')
   .addClass('btn btn-primary')
   .text('Buy for $50');
@@ -128,7 +132,9 @@ const $powerCardBody = $('<div>').addClass('card-body');
 const $powerToolTitle = $('<h5>').addClass('card-title').text('Power Mower');
 const $powerDescription = $('<p>')
   .addClass('card-text')
-  .text('Power Mower cost $250');
+  .text(
+    'Power Mower cost $250.  This will now increase your profits to $50 per lawn.'
+  );
 const $powerBuyBtn = $('<button>')
   .addClass('btn btn-primary')
   .text('Buy for $250');
@@ -142,7 +148,9 @@ const $studentCardBody = $('<div>').addClass('card-body');
 const $studentToolTitle = $('<h5>').addClass('card-title').text('Students');
 const $studentDescription = $('<p>')
   .addClass('card-text')
-  .text('Hire Students for $500');
+  .text(
+    'Hire Students for $500. This will now increase your profits to $100 per lawn.'
+  );
 const $studentBuyBtn = $('<button>')
   .addClass('btn btn-primary')
   .text('Hire for $500');
@@ -156,7 +164,9 @@ const $robotCardBody = $('<div>').addClass('card-body');
 const $robotToolTitle = $('<h5>').addClass('card-title').text('Robot');
 const $robotDescription = $('<p>')
   .addClass('card-text')
-  .text('Robot cost $5000');
+  .text(
+    'New Robots cost $5000.  This will now increase your profits to $250 per lawn.'
+  );
 const $robotBuyBtn = $('<button>')
   .addClass('btn btn-primary')
   .text('Buy for $5000');
@@ -199,6 +209,17 @@ const $shopResponse = $('<h5>').addClass('container text-center').text('');
 function displayShopResponse() {
   $('body').append($shopTextContainer);
   $shopTextContainer.append($shopResponse);
+}
+
+//close btn for shop
+const $closeBtnContainer = $('<div>').addClass('container');
+const $closeBtn = $('<button>')
+  .addClass('container btn btn-secondary')
+  .text('Close')
+  .attr('id', 'close-store-btn');
+function displayCloseBtn() {
+  $('body').append($closeBtnContainer);
+  $closeBtnContainer.append($closeBtn);
 }
 
 //stats container
@@ -363,8 +384,8 @@ function displayMessage() {
 //************************--Game Logic--*************************/
 
 //ran num for game message
-function ranNum(MAX_NUM, MIN_NUM) {
-  return Math.floor(Math.random() * (MAX_NUM - MIN_NUM) + MIN_NUM);
+function ranNum(maxNum, minNum) {
+  return Math.floor(Math.random() * (maxNum - minNum) + minNum);
 }
 
 //game variables and logic
@@ -413,8 +434,8 @@ const userStats = {
 //main cut grass function
 
 function cutGrass() {
-  $shopResponse.hide();
-  $storeContainer.hide();
+  $closeBtnContainer.hide();
+  $shopResponse.text('');
   userStats.lawncount += 1;
   toolSelected();
   $balanceAmount.text(`$${userStats.balance}`);
@@ -531,11 +552,13 @@ function cutGrassRobots() {
 function toolShop() {
   $shopResponse.show();
   $storeContainer.show();
+  $closeBtnContainer.show();
 }
 
 function buyScissors() {
-  if (userStats.balance > userStats.scissors.cost) {
+  if (userStats.balance >= userStats.scissors.cost) {
     userStats.balance = userStats.balance - userStats.scissors.cost;
+    $balanceAmount.text(`$${userStats.balance}`);
     $scissorsInput.show();
     $scissorsLabel.show();
     $scissorCard.hide();
@@ -548,8 +571,9 @@ function buyScissors() {
   }
 }
 function buypushMower() {
-  if (userStats.balance > userStats.pushMower.cost) {
+  if (userStats.balance >= userStats.pushMower.cost) {
     userStats.balance = userStats.balance - userStats.pushMower.cost;
+    $balanceAmount.text(`$${userStats.balance}`);
     $pushMowerInput.show();
     $pushMowerLabel.show();
     $pushCard.hide();
@@ -562,8 +586,9 @@ function buypushMower() {
   }
 }
 function buyPowerMower() {
-  if (userStats.balance > userStats.powerMower.cost) {
-    userStats.balance = userStats.balance - userStats.pushMower.cost;
+  if (userStats.balance >= userStats.powerMower.cost) {
+    userStats.balance = userStats.balance - userStats.powerMower.cost;
+    $balanceAmount.text(`$${userStats.balance}`);
     $powerInput.show();
     $powerLabel.show();
     $powerCard.hide();
@@ -576,8 +601,9 @@ function buyPowerMower() {
   }
 }
 function buyStudents() {
-  if (userStats.balance > userStats.students.cost) {
+  if (userStats.balance >= userStats.students.cost) {
     userStats.balance = userStats.balance - userStats.students.cost;
+    $balanceAmount.text(`$${userStats.balance}`);
     $studentInput.show();
     $studentLabel.show();
     $studentCard.hide();
@@ -590,8 +616,9 @@ function buyStudents() {
   }
 }
 function buyRobot() {
-  if (userStats.balance > userStats.robots.cost) {
+  if (userStats.balance >= userStats.robots.cost) {
     userStats.balance = userStats.balance - userStats.robots.cost;
+    $balanceAmount.text(`$${userStats.balance}`);
     $robotInput.show();
     $robotLabel.show();
     $robotCard.hide();
@@ -603,6 +630,7 @@ function buyRobot() {
 }
 
 function resetGame() {
+  $closeBtnContainer.hide();
   $shopResponse.hide();
   $storeContainer.hide();
   showToolShop();
@@ -614,6 +642,7 @@ function resetGame() {
   $lawnAmount.text(`${userStats.lawncount}`);
   $teethInput.attr('checked', 'checked');
   $gameMessage.text('Game reset.');
+  $shopResponse.text('');
 }
 
 //jquery
@@ -633,11 +662,19 @@ $(() => {
   $studentBuyBtn.on('click', buyStudents);
   $robotBuyBtn.on('click', buyRobot);
 
+  $closeBtn.on('click', () => {
+    $storeContainer.hide();
+    $closeBtnContainer.hide();
+    $shopTextContainer.hide();
+  });
+
   $storeContainer.hide();
+  $closeBtnContainer.hide();
 
   displayMenu();
   displayStore();
   displayShopResponse();
+  //displayCloseBtn();
   displayStats();
   displayTools();
   displayMessage();
