@@ -224,7 +224,7 @@ function displayTools() {
 const userStats = {
   balance: 0,
   lawncount: 0,
-  currentTool: cutGrassTeeth,
+  currentTool: cutGrass,
   teeth: {
     toolName: 'Teeth',
     own: true,
@@ -264,15 +264,42 @@ const userStats = {
 };
 
 function cutGrass() {
-  userStats.currentTool();
   userStats.lawncount += 1;
+  toolSelected();
   $balanceAmount.text(`$${userStats.balance}`);
   $lawnAmount.text(`${userStats.lawncount}`);
-  console.log(`current tool: ${userStats.currentTool}`);
+  const $selectedBtn = $('input[type=radio]:checked').attr('id');
+  console.log($selectedBtn);
+  //   console.log(`current tool: ${userStats.currentTool}`);
+}
+
+//function to check which radio button is selected
+function toolSelected() {
+  const $selectedBtn = $('input[type=radio]:checked').attr('id');
+  switch ($selectedBtn) {
+    case 'scissors-input':
+      cutGrassScissors();
+      break;
+    case 'pushMower-input':
+      cutGrassPushMower();
+      break;
+    case 'power-input':
+      cutGrassPowerMower();
+      break;
+    case 'student-input':
+      cutGrassStudents();
+      break;
+    case 'robot-input':
+      cutGrassRobots();
+      break;
+    default:
+      cutGrassTeeth();
+      break;
+  }
 }
 
 function cutGrassTeeth() {
-  userStats.balance += userStats.scissors.profit;
+  userStats.balance += userStats.teeth.profit;
 }
 function cutGrassScissors() {
   userStats.balance += userStats.scissors.profit;
@@ -312,9 +339,9 @@ $(() => {
   //   );
   // });
 
-  $('.btn-check').on('change', function () {
-    console.log($('input[name="btnradio"]:checked').attr('id'));
-  });
+  // $('.btn-check').on('change', function () {
+  //   console.log($('input[name="btnradio"]:checked').attr('id'));
+  // });
 
   displayMenu();
   displayStats();
