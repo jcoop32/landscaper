@@ -325,6 +325,10 @@ function displayTools() {
     $robotInput,
     $robotLabel
   );
+  hideUnlockedTools();
+}
+
+function hideUnlockedTools() {
   $scissorsInput.hide();
   $scissorsLabel.hide();
   $pushMowerInput.hide();
@@ -343,6 +347,8 @@ function displayMessage() {
   $('body').append($messageContainer);
   $messageContainer.append($gameMessage);
 }
+
+//************************--Game Logic--*************************/
 
 //ran num for game message
 function ranNum(MAX_NUM, MIN_NUM) {
@@ -392,8 +398,10 @@ const userStats = {
     cost: 5000,
   },
 };
+//main cut grass function
 
 function cutGrass() {
+  $storeContainer.hide();
   userStats.lawncount += 1;
   toolSelected();
   $balanceAmount.text(`$${userStats.balance}`);
@@ -401,10 +409,6 @@ function cutGrass() {
   const $selectedBtn = $('input[type=radio]:checked').attr('id');
   // console.log(userStats);
   //   console.log(`current tool: ${userStats.currentTool}`);
-  if (userStats.balance > 5) {
-    $scissorsInput.show();
-    $scissorsLabel.show();
-  }
 }
 
 //function to check which radio button is selected
@@ -412,21 +416,27 @@ function toolSelected() {
   const $selectedBtn = $('input[type=radio]:checked').attr('id');
   switch ($selectedBtn) {
     case 'scissors-input':
+      $storeContainer.hide();
       cutGrassScissors();
       break;
     case 'pushMower-input':
+      $storeContainer.hide();
       cutGrassPushMower();
       break;
     case 'power-input':
+      $storeContainer.hide();
       cutGrassPowerMower();
       break;
     case 'student-input':
+      $storeContainer.hide();
       cutGrassStudents();
       break;
     case 'robot-input':
+      $storeContainer.hide();
       cutGrassRobots();
       break;
     default:
+      $storeContainer.hide();
       cutGrassTeeth();
       break;
   }
@@ -505,6 +515,68 @@ function cutGrassRobots() {
   );
 }
 
+function toolShop() {
+  $storeContainer.show();
+}
+
+// function toolBuyProccess() {
+// if (userStats.balance > userStats.scissors.cost){
+//
+// }
+// }
+
+function buyScissors() {
+  if (userStats.balance > userStats.scissors.cost) {
+    userStats.balance = userStats.balance - userStats.scissors.cost;
+    $scissorsInput.show();
+    $scissorsLabel.show();
+    $scissorCard.hide();
+  }
+}
+function buypushMower() {
+  if (userStats.balance > userStats.pushMower.cost) {
+    userStats.balance = userStats.balance - userStats.pushMower.cost;
+    $pushMowerInput.show();
+    $pushMowerLabel.show();
+    $pushCard.hide();
+  }
+}
+function buyPowerMower() {
+  if (userStats.balance > userStats.powerMower.cost) {
+    userStats.balance = userStats.balance - userStats.powerMower.cost;
+    $powerInput.show();
+    $powerLabel.show();
+    $powerCard.hide();
+  }
+}
+function buyStudents() {
+  if (userStats.balance > userStats.students.cost) {
+    userStats.balance = userStats.balance - userStats.students.cost;
+    $studentInput.show();
+    $studentLabel.show();
+    $studentCard.hide();
+  }
+}
+function buyRobot() {
+  if (userStats.balance > userStats.robots.cost) {
+    userStats.balance = userStats.balance - userStats.robots.cost;
+    $robotInput.show();
+    $robotLabel.show();
+    $robotCard.hide();
+  }
+}
+
+function resetGame() {
+  $storeContainer.hide();
+  hideUnlockedTools();
+  userStats.balance = 0;
+  userStats.lawncount = 0;
+  userStats.currentTool = cutGrass;
+  $balanceAmount.text(`$${userStats.balance}`);
+  $lawnAmount.text(`${userStats.lawncount}`);
+  $gameMessage.text('Game reset.');
+}
+
 //jquery
 $(() => {
   const $h1 = $('<h1>').text('Landscaper').addClass('title');
@@ -512,20 +584,17 @@ $(() => {
   $('body').addClass('container');
 
   $cutBtn.on('click', userStats.currentTool);
+  $upgradeBtn.on('click', toolShop);
+  $resetBtn.on('click', resetGame);
+  // $endBtn.on('click', );
 
-  // $scissorsInput.on('click', () => {
-  //   userStats.currentTool = cutGrassScissors;
-  // });
+  $scissorBuyBtn.on('click', buyScissors);
+  $pushMowerBuyBtn.on('click', buypushMower);
+  $powerBuyBtn.on('click', buyPowerMower);
+  $studentBuyBtn.on('click', buyStudents);
+  $robotBuyBtn.on('click', buyRobot);
 
-  // $('#tool-container input').on('change', () => {
-  //   console.log(
-  //     `${$('input[name=btnradio]:checked', '#tool-container').val()}`
-  //   );
-  // });
-
-  // $('.btn-check').on('change', function () {
-  //   console.log($('input[name="btnradio"]:checked').attr('id'));
-  // });
+  $storeContainer.hide();
 
   displayMenu();
   displayStore();
